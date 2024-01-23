@@ -2,16 +2,17 @@ package com.bardev.enochianchess;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import model.Board;
+
 public class MainGame extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private Texture board;
+
+	private Board board;
 
 	private int width, height;
 
@@ -20,30 +21,35 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		board = new Texture("tablero-naranja-notacion.png");
 
 		// Width x Height
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		System.out.println("My screen: " + width + "x" + height );
+
+		// Create board
+		Texture img = new Texture("tablero-naranja-notacion.png");
+		board = new Board(img, width-10, height-10);
+
 	}
 
 	// Used to clear resources
 	@Override
 	public void dispose () {
 		batch.dispose();
-		board.dispose();
+		board.getImg().dispose();
 	}
 
 	// Update game state, render files ...
 	@Override
 	public void render () {
 		// Clear buffer
-		ScreenUtils.clear(0, 0, 0, 1);
+		ScreenUtils.clear(Color.WHITE);
+
 
 		// Begin draw
 		batch.begin();
-		batch.draw(board, 0, 0, 400, 400);
+		batch.draw(board.getImg(), 0, 0, board.getWidth(), board.getHeight());
 		batch.end();
 
 	}
