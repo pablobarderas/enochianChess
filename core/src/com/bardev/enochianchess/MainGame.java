@@ -2,8 +2,10 @@ package com.bardev.enochianchess;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -45,7 +47,6 @@ public class MainGame extends ApplicationAdapter {
 	public void render () {
 		// Clear buffer
 		ScreenUtils.clear(Color.WHITE);
-
 
 		// Begin draw
 		batch.begin();
