@@ -68,16 +68,20 @@ public class MainGame extends ApplicationAdapter {
 		// Begin draw
 		batch.begin();
 
-		// BoardTextures draw AQUI NO PUEDO HACER UN FOR PORQUE SE REPITE TODO EL RATO
+		// Test
+		int yInc = 0;
+		// BoardTextures draw
 		for (int i = 0; i < board.getBoardTextures().length; i++) {
 			int x = 0;
-			int y = 0;
+			int y = 400;
+
+
 			for (int j = 0; j < board.getBoardTextures().length; j++) {
-				batch.draw(board.getBoardTextures()[i][j], x, y, board.getWidth(), board.getHeight());
+				batch.draw(board.getBoardTextures()[i][j], x, y + yInc, board.getWidth(), board.getHeight());
 				x+=58;
 				//System.out.println("[ " + board.getBoardTextures()[i][j] + " ]" );
-
 			}
+			yInc -= 58;
 			//batch.draw(board.getBoardTextures()[i][0], x, y, board.getWidth(), board.getHeight());
 
 		}
