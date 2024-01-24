@@ -1,14 +1,15 @@
 package model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureArray;
 
 public class Board {
 
-    private Texture img;
+    private Texture[][] boardTextures;
     private int width, height;
 
-    public Board(Texture img, int width, int height) {
-        this.img = img;
+    public Board(Texture[][] boardTextures, int width, int height) {
+        this.boardTextures = boardTextures;
         this.width = width;
         this.height = height;
     }
@@ -17,12 +18,12 @@ public class Board {
 
     }
 
-    public Texture getImg() {
-        return img;
+    public Texture[][] getBoardTextures() {
+        return boardTextures;
     }
 
-    public void setImg(Texture img) {
-        this.img = img;
+    public void setBoardTextures(Texture[][] boardTextures) {
+        this.boardTextures = boardTextures;
     }
 
     public int getWidth() {

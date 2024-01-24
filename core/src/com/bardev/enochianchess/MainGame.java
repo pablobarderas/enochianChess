@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureArray;
 import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -30,8 +31,18 @@ public class MainGame extends ApplicationAdapter {
 		System.out.println("My screen: " + width + "x" + height );
 
 		// Create board
-		Texture img = new Texture("tablero-naranja-notacion.png");
-		board = new Board(img, width-10, height-10);
+		//Texture img = new Texture("tablero-naranja-notacion.png");
+		//board = new Board(img, width-10, height-10);
+
+		// Test board textures
+		Texture[][] boardTextures = new Texture[8][8];
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				boardTextures[row][col] = new Texture("red.png");
+			}
+		}
+
+		board = new Board(boardTextures, width, height);
 
 	}
 
@@ -39,7 +50,13 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		board.getImg().dispose();
+
+		// BoardTextures dispose
+		for (int i = 0; i < board.getBoardTextures().length; i++) {
+			for (int j = 0; j < board.getBoardTextures().length; j++) {
+			board.getBoardTextures()[i][j].dispose();
+			}
+		}
 	}
 
 	// Update game state, render files ...
@@ -50,7 +67,16 @@ public class MainGame extends ApplicationAdapter {
 
 		// Begin draw
 		batch.begin();
-		batch.draw(board.getImg(), 0, 0, board.getWidth(), board.getHeight());
+
+		// BoardTextures draw AQUI NO PUEDO HACER UN FOR PORQUE SE REPITE TODO EL RATO
+		for (int i = 0; i < board.getBoardTextures().length; i++) {
+			for (int j = 0; j < board.getBoardTextures().length; j++) {
+				batch.draw(board.getBoardTextures()[i][j], 0, 0, board.getWidth(), board.getHeight());
+				System.out.println("[ " + board.getBoardTextures()[i][j] + " ]" );
+
+			}
+		}
+
 		batch.end();
 
 	}
