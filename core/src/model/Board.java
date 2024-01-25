@@ -9,11 +9,24 @@ public class Board {
     private Texture[][] boardTextures;
     private int width, height, size;
 
-    public Board(Texture[][] boardTextures, int width, int height, int size) {
-        this.boardTextures = boardTextures;
+    public Board( int width, int height, int size) {
         this.width = width;
         this.height = height;
         this.size = size;
+
+        // Board Textures
+        boardTextures = new Texture[8][8];
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                // (Column ODD and row EVEN) OR (column EVEN and row ODD)
+                boolean red = col%2==0 && row%2!=0 || col%2!=0 && row%2==0;
+                if(red){ // RED
+                    boardTextures[row][col] = new Texture("red.png");
+                } else  {// BLACK
+                    boardTextures[row][col] = new Texture("black.png");
+                }
+            }
+        }
     }
 
     public Board(){

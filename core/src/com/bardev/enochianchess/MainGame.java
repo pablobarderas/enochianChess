@@ -25,30 +25,13 @@ public class MainGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 
-		// Width x Height
+		// Width x Height Screen
 		widthScreen = Gdx.graphics.getWidth();
 		heightScreen = Gdx.graphics.getHeight();
 		System.out.println("My screen: " + widthScreen + "x" + heightScreen );
 
 		// Create board
-		//Texture img = new Texture("tablero-naranja-notacion.png");
-		//board = new Board(img, width-10, height-10);
-
-		// Board Textures
-		Texture[][] boardTextures = new Texture[8][8];
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				// (Column ODD and row EVEN) OR (column EVEN and row ODD)
-				boolean red = col%2==0 && row%2!=0 || col%2!=0 && row%2==0;
-				if(red){ // RED
-				boardTextures[row][col] = new Texture("red.png");
-				} else  {// BLACK
-					boardTextures[row][col] = new Texture("black.png");
-				}
-			}
-		}
-
-		board = new Board(boardTextures, 80, 80, 8);
+		board = new Board( 80, 80, 8);
 
 	}
 
