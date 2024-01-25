@@ -38,7 +38,13 @@ public class MainGame extends ApplicationAdapter {
 		Texture[][] boardTextures = new Texture[8][8];
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
+				// (Column ODD and row EVEN) OR (column EVEN and row ODD)
+				boolean red = col%2==0 && row%2!=0 || col%2!=0 && row%2==0;
+				if(red){ // RED
 				boardTextures[row][col] = new Texture("red.png");
+				} else  {// BLACK
+					boardTextures[row][col] = new Texture("black.png");
+				}
 			}
 		}
 
@@ -53,7 +59,7 @@ public class MainGame extends ApplicationAdapter {
 
 		// BoardTextures dispose
 		for (int i = 0; i < board.getBoardTextures().length; i++) {
-			for (int j = 0; j < board.getBoardTextures().length; j++) {
+			for (int j = 0; j < board.getBoardTextures()[0].length; j++) {
 			board.getBoardTextures()[i][j].dispose();
 			}
 		}
@@ -68,23 +74,8 @@ public class MainGame extends ApplicationAdapter {
 		// Begin draw
 		batch.begin();
 
-		// Test
-		int yInc = 0;
-		// BoardTextures draw
-		for (int i = 0; i < board.getBoardTextures().length; i++) {
-			int x = 0;
-			int y = 400;
-
-
-			for (int j = 0; j < board.getBoardTextures().length; j++) {
-				batch.draw(board.getBoardTextures()[i][j], x, y + yInc, board.getWidth(), board.getHeight());
-				x+=58;
-				//System.out.println("[ " + board.getBoardTextures()[i][j] + " ]" );
-			}
-			yInc -= 58;
-			//batch.draw(board.getBoardTextures()[i][0], x, y, board.getWidth(), board.getHeight());
-
-		}
+		// Draw board
+		board.drawBoard(batch);
 
 		batch.end();
 

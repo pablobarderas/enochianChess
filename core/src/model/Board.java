@@ -2,6 +2,7 @@ package model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureArray;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Board {
 
@@ -40,5 +41,18 @@ public class Board {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void drawBoard(SpriteBatch batch){
+        // BoardTextures draw
+        int cellSize = 58;
+        int boardSize = this.getBoardTextures().length;
+        for (int i = 0; i < boardSize; i++) {
+            int y = cellSize * i;
+            for (int j = 0; j < boardSize; j++) {
+                int x = cellSize * j;
+                batch.draw(this.getBoardTextures()[i][j], x, y, this.getWidth(), this.getHeight());
+            }
+        }
     }
 }
