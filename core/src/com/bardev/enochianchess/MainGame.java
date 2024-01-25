@@ -46,7 +46,7 @@ public class MainGame extends ApplicationAdapter {
 	// Update game state, render files ...
 	@Override
 	public void render () {
-		// Clear buffer
+		// Clear buffer and set color
 		ScreenUtils.clear(Color.WHITE);
 
 		// Begin draw
@@ -55,6 +55,7 @@ public class MainGame extends ApplicationAdapter {
 		// Draw board
 		board.drawBoard(batch);
 
+		// End draw
 		batch.end();
 
 	}
