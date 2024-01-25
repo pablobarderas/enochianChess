@@ -38,13 +38,15 @@ public class MainGameScreen extends BaseScreen{
     @Override
     public void show() {
         stage = new Stage();
+        board = new Board(boardTexture, 80,80,8);
         pieces = new Pieces(piecesTexture);
-        board = new Board(80,80,8);
-        stage.addActor(pieces);
         stage.addActor(board);
+        stage.addActor(pieces);
 
-        pieces.setPosition(10,100);
-        board.setPosition(20,100);
+        // Positions
+        pieces.setPosition(14,72);
+        board.setPosition(20, 20);
+
     }
 
     @Override

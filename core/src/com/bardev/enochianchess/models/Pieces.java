@@ -13,12 +13,8 @@ public class Pieces extends Actor {
     }
 
     @Override
-    public void act(float delta) {
-        super.act(delta);
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(pieces, getX(), getY(), 50,50 );
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.draw(pieces, 2,2);
-    }
 }

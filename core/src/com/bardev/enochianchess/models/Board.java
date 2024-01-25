@@ -7,14 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Board extends Actor {
 
     private Texture[][] boardTextures;
-    private int cellWidth, cellHeight, size;
+    private int cellWidth, cellHeight, boardSize;
 
-    public Board(int cellWidth, int cellHeight, int size){
+    public Board(Texture[][] boardTextures, int cellWidth, int cellHeight, int boardSize){
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
-        this.size = size;
-
-        fillBoard();
+        this.boardSize = boardSize;
+        this.boardTextures = boardTextures;
     }
 
     public void fillBoard() {
@@ -42,6 +41,9 @@ public class Board extends Actor {
     public int getCellWidth() {
         return this.cellWidth;
     }
+    public int getCellHeight() {
+        return this.cellHeight;
+    }
 
 
     @Override
@@ -49,12 +51,13 @@ public class Board extends Actor {
 
         // BoardTextures draw
         int cellSize = 58;
-        int boardSize = 8;
         for (int i = 0; i < boardSize; i++) {
-            int y = cellSize * i;
+            //int y = cellSize * i;
+            setY(cellSize*i);
             for (int j = 0; j < boardSize; j++) {
-                int x = cellSize * j;
-                batch.draw(this.getBoardTextures()[i][j], x, y, this.getCellWidth(), this.getHeight());
+                //int x = cellSize * j;
+                setX(cellSize*j);
+                batch.draw(this.getBoardTextures()[i][j], getX(), getY(), this.getCellWidth(), this.getCellHeight());
             }
         }
     }
@@ -62,8 +65,8 @@ public class Board extends Actor {
     // Dispose method to clean resources
     public void disposeBoard(){
         // BoardTextures dispose
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
                 this.getBoardTextures()[i][j].dispose();
             }
         }
