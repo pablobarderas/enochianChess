@@ -17,7 +17,7 @@ public class MainGame extends ApplicationAdapter {
 
 	private Board board;
 
-	private int width, height;
+	private int widthScreen, heightScreen;
 
 
 	// Upload files here
@@ -26,15 +26,15 @@ public class MainGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		// Width x Height
-		width = Gdx.graphics.getWidth();
-		height = Gdx.graphics.getHeight();
-		System.out.println("My screen: " + width + "x" + height );
+		widthScreen = Gdx.graphics.getWidth();
+		heightScreen = Gdx.graphics.getHeight();
+		System.out.println("My screen: " + widthScreen + "x" + heightScreen );
 
 		// Create board
 		//Texture img = new Texture("tablero-naranja-notacion.png");
 		//board = new Board(img, width-10, height-10);
 
-		// Test board textures
+		// Board Textures
 		Texture[][] boardTextures = new Texture[8][8];
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
@@ -48,7 +48,7 @@ public class MainGame extends ApplicationAdapter {
 			}
 		}
 
-		board = new Board(boardTextures, 80, 80);
+		board = new Board(boardTextures, 80, 80, 8);
 
 	}
 
@@ -56,13 +56,8 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		board.disposeBoard();
 
-		// BoardTextures dispose
-		for (int i = 0; i < board.getBoardTextures().length; i++) {
-			for (int j = 0; j < board.getBoardTextures()[0].length; j++) {
-			board.getBoardTextures()[i][j].dispose();
-			}
-		}
 	}
 
 	// Update game state, render files ...
