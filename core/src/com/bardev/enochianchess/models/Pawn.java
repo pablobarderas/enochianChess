@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Pawn extends Pieces{
 
-    Texture pawnTexture;
+    private Texture pawnTexture;
     public Pawn(Texture pawnTexture) {
         super(pawnTexture);
         this.pawnTexture = pawnTexture;

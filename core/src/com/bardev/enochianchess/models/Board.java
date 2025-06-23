@@ -9,30 +9,27 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Board extends Actor {
 
     private Texture[][] boardTextures;
-    private int cellWidth, cellHeight, boardSize;
+    private int boardSize;
+    private float cellSize;
+    private ShapeRenderer shapeRenderer;
 
-    public Board(Texture[][] boardTextures, int cellWidth, int cellHeight, int boardSize){
-        this.cellWidth = cellWidth;
-        this.cellHeight = cellHeight;
+    public Board(Texture[][] boardTextures, float cellSize, int boardSize) {
+        this.cellSize = cellSize;
         this.boardSize = boardSize;
         this.boardTextures = boardTextures;
+        shapeRenderer = new ShapeRenderer();
     }
 
     public void fillBoard() {
+        Texture[][] boardTexture = new Texture[boardSize][boardSize];
 
-        // Board Textures
-        Texture[][] boardTexture = new Texture[8][8];
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                // (Column ODD and row EVEN) OR (column EVEN and row ODD)
-                boolean red = col%2==0 && row%2!=0 || col%2!=0 && row%2==0;
-                if(red){ // RED
-                    boardTexture[row][col] = new Texture("red.png");
-                } else  {// BLACK
-                    boardTexture[row][col] = new Texture("black.png");
-                }
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                boolean red = col % 2 == 0 && row % 2 != 0 || col % 2 != 0 && row % 2 == 0;
+                boardTexture[row][col] = new Texture(red ? "red.jpg" : "black.jpg");
             }
         }
+
         this.boardTextures = boardTexture;
     }
 
@@ -40,37 +37,49 @@ public class Board extends Actor {
         return boardTextures;
     }
 
-    public int getCellWidth() {
-        return this.cellWidth;
+    public float getCellSize() {
+        return this.cellSize;
     }
-    public int getCellHeight() {
-        return this.cellHeight;
-    }
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.end(); // Se detiene para usar ShapeRenderer
 
-        // BoardTextures draw
-        int cellSize = 58;
-        for (int i = 0; i < boardSize; i++) {
-            //int y = cellSize * i;
-            setY(cellSize*i);
-            for (int j = 0; j < boardSize; j++) {
-                //int x = cellSize * j;
-                setX(cellSize*j);
-                batch.draw(this.getBoardTextures()[i][j], getX(), getY(), this.getCellWidth(), this.getCellHeight());
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.GOLD);
+
+        float borderSize = 10f;
+        float totalSize = cellSize * boardSize;
+
+        shapeRenderer.rect(
+                getX() - borderSize,
+                getY() - borderSize,
+                totalSize + 2 * borderSize,
+                totalSize + 2 * borderSize
+        );
+
+        shapeRenderer.end();
+
+        batch.begin(); // Volvemos a dibujar con Batch
+
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                float x = getX() + col * cellSize;
+                float y = getY() + row * cellSize;
+                batch.draw(boardTextures[row][col], x, y, cellSize, cellSize);
             }
         }
     }
 
-    // Dispose method to clean resources
-    public void disposeBoard(){
-        // BoardTextures dispose
+
+
+    public void disposeBoard() {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                this.getBoardTextures()[i][j].dispose();
+                boardTextures[i][j].dispose();
             }
         }
+        shapeRenderer.dispose();
     }
 }

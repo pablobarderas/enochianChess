@@ -15,7 +15,7 @@ public class Pieces extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(pieces, getX(), getY(), 50,50 );
+        batch.draw(pieces, getX(), getY(), getWidth(),getHeight() );
     }
 
 }
