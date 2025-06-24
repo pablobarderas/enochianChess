@@ -4,17 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.bardev.enochianchess.models.Board;
-import com.bardev.enochianchess.models.Pieces;
+import com.bardev.enochianchess.models.Pawn;
 
 public class MainGameScreen extends BaseScreen{
     private Stage stage;
-    private Pieces pieces;
-
     private Texture piecesTexture;
     private Board board;
     private  Texture[][] boardTexture;
@@ -30,7 +29,7 @@ public class MainGameScreen extends BaseScreen{
 
     public MainGameScreen(MainGame game){
         super(game);
-        piecesTexture = new Texture("pawn-white.png");
+//        piecesTexture = new Texture("pawn-white.jpg");
         calculateBoardDimensions();
         board = new Board(cellSize, BOARD_SIZE);
     }
@@ -49,16 +48,24 @@ public class MainGameScreen extends BaseScreen{
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        pieces = new Pieces(piecesTexture);
-
         board.setPosition(boardX, boardY);
-        pieces.setPosition(boardX + 14, boardY + cellSize + 18);
-        pieces.setWidth(100f);
-        pieces.setHeight(100f);
         stage.addActor(board);
-        stage.addActor(pieces);
+
+        // Añadir algunos peones de prueba
+        for (int col = 0; col < BOARD_SIZE; col++) {
+            Pawn whitePawn = new Pawn("white", 6, col);
+            whitePawn.setPosition(boardX + col * cellSize, boardY + 6 * cellSize);
+            whitePawn.setSize(cellSize, cellSize);
+            stage.addActor(whitePawn);
+
+//            Pawn blackPawn = new Pawn("black", 1, col);
+//            blackPawn.setPosition(boardX + col * cellSize, boardY + 1 * cellSize);
+//            blackPawn.setSize(cellSize, cellSize);
+//            stage.addActor(blackPawn);
+        }
     }
 
+    // ESTE METODO LO QUE HACE ES REAJUSTAR TODOS LOS TAMANYOS COMO DEBEN, POR ESTO SE NECESITA LA POSICION Y EL TAMANYO DE LOS ACTORES DEL STAGE
     @Override
     public void resize(int width, int height) {
         calculateBoardDimensions();
@@ -66,6 +73,13 @@ public class MainGameScreen extends BaseScreen{
         board.setPosition(boardX, boardY);
 
         // TODO ACTUALIZAR POSICIONES DE PIEZAS SI ES NECESARIO
+        for (Actor actor : stage.getActors()) {
+            if (actor instanceof Pawn) {
+                Pawn pawn = (Pawn) actor;
+                pawn.setPosition(boardX + pawn.getCol() * cellSize, boardY + pawn.getRow() * cellSize);
+                pawn.setSize(cellSize, cellSize);
+            }
+        }
     }
 
     @Override
@@ -83,7 +97,11 @@ public class MainGameScreen extends BaseScreen{
 
     @Override
     public void dispose() {
-        piecesTexture.dispose();
         board.disposeBoard();
+        for (Actor actor : stage.getActors()) {
+            if (actor instanceof Pawn) {
+                ((Pawn) actor).dispose();
+            }
+        }
     }
 }

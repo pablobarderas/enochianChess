@@ -1,18 +1,15 @@
 package com.bardev.enochianchess.models;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
-public class Pawn extends Pieces{
-
-    private Texture pawnTexture;
-    public Pawn(Texture pawnTexture) {
-        super(pawnTexture);
-        this.pawnTexture = pawnTexture;
+public class Pawn extends Piece {
+    public Pawn(String colorSide, int row, int col) {
+        super(new Texture("pawn-" + colorSide + ".png"), colorSide, row, col);
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+    public boolean isValidMove(int toRow, int toCol, Piece[][] board) {
+        // Implementación vacía por ahora, se añadirá en el siguiente paso
+        return false;
     }
 }

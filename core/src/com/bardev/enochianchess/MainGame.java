@@ -20,19 +20,9 @@ public class MainGame extends Game {
 	// Upload files here
 	@Override
 	public void create () {
-		//batch = new SpriteBatch();
-
 		// Main Screen
 		Screen mainGameScreen = new MainGameScreen(this);
 		this.setScreen(mainGameScreen);
-//
-//		// Width x Height Screen
-//		widthScreen = Gdx.graphics.getWidth();
-//		heightScreen = Gdx.graphics.getHeight();
-//		System.out.println("My screen: " + widthScreen + "x" + heightScreen );
-//
-//		// Create board
-//		board = new Board( 80, 80, 8);
 
 	}
 
