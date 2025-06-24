@@ -22,45 +22,51 @@ public class MainGameScreen extends BaseScreen{
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
 
+    private float cellSize;
+    private float boardX, boardY;
+
+    private static final int BOARD_SIZE = 8;
+    private static final float CELL_SCALE_FACTOR = 8.30f;
 
     public MainGameScreen(MainGame game){
         super(game);
         piecesTexture = new Texture("pawn-white.png");
+        calculateBoardDimensions();
+        board = new Board(cellSize, BOARD_SIZE);
+    }
 
-        // Fill boardTexture
-        boardTexture = new Texture[8][8];
-
-
+    private void calculateBoardDimensions() {
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        cellSize = Math.min(screenWidth, screenHeight) / CELL_SCALE_FACTOR;
+        float boardSize = cellSize * BOARD_SIZE;
+        boardX = (screenWidth - boardSize) / 2f;
+        boardY = (screenHeight - boardSize) / 2f;
     }
 
     @Override
     public void show() {
 
-        float cellSize = Math.min(screenWidth, screenHeight) / 8.30f;
-        float boardSize = cellSize * 8;
-        float boardX = (screenWidth - boardSize) / 2f;
-        float boardY = (screenHeight - boardSize) / 2f;
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
-        board = new Board(boardTexture, cellSize, 8);
         pieces = new Pieces(piecesTexture);
 
         board.setPosition(boardX, boardY);
-
+        pieces.setPosition(boardX + 14, boardY + cellSize + 18);
         pieces.setWidth(100f);
         pieces.setHeight(100f);
-
-        // TODO TAMAñO Y POSICIONES DE PEONES
-        pieces.setPosition(boardX + 14, boardY + cellSize + 18);
-
         stage.addActor(board);
         stage.addActor(pieces);
-
-        board.fillBoard();
     }
 
+    @Override
+    public void resize(int width, int height) {
+        calculateBoardDimensions();
+        stage.getViewport().update(width, height, true);
+        board.setPosition(boardX, boardY);
+
+        // TODO ACTUALIZAR POSICIONES DE PIEZAS SI ES NECESARIO
+    }
 
     @Override
     public void hide() {
